@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml;
+using System.IO;
 
 namespace XmlHandler
 {
