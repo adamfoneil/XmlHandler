@@ -5,8 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XmlHandler"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Unicode Escape Processor" Height="600" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Input Section -->
+        <Border Grid.Row="0" BorderBrush="LightGray" BorderThickness="1" Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Input:" FontWeight="Bold" Margin="5"/>
+                <TextBox Grid.Row="1" x:Name="InputTextBox" AcceptsReturn="True" 
+                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                         TextWrapping="Wrap" Margin="5" TextChanged="InputTextBox_TextChanged"/>
+            </Grid>
+        </Border>
+        
+        <!-- Output Section -->
+        <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Output:" FontWeight="Bold" Margin="5"/>
+                <TextBox Grid.Row="1" x:Name="OutputTextBox" AcceptsReturn="True" 
+                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                         TextWrapping="Wrap" Margin="5" IsReadOnly="True" Background="LightGray"/>
+            </Grid>
+        </Border>
+        
+        <!-- Button Section -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="CopyButton" Content="Copy Output to Clipboard" 
+                    Click="CopyButton_Click" Padding="10,5" MinWidth="150"/>
+        </StackPanel>
     </Grid>
 </Window>
