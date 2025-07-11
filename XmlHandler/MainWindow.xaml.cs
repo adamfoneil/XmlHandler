@@ -31,10 +31,26 @@ namespace XmlHandler
             
             string input = InputTextBox.Text;
             string output = ProcessUnicodeEscapes(input);
-            OutputTextBox.Text = output;
+            output = ReplaceControlCharacters(output);
+			OutputTextBox.Text = output;
         }
 
-        private string ProcessUnicodeEscapes(string input)
+		private string ReplaceControlCharacters(string output)
+		{
+			// remove \t, \r, \n and any other control characters
+			if (string.IsNullOrEmpty(output)) return string.Empty;
+
+            string[] replace = ["\\t", "\\r", "\\n", "\\b", "\\f"];
+
+			foreach (var item in replace)
+			{
+				output = output.Replace(item, string.Empty);
+			}
+
+            return output;
+		}
+
+		private string ProcessUnicodeEscapes(string input)
         {
             if (string.IsNullOrEmpty(input)) return string.Empty;
 
