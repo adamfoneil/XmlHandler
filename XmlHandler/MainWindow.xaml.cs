@@ -9,6 +9,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
+using System.Xml;
 
 namespace XmlHandler
 {
@@ -52,7 +54,43 @@ namespace XmlHandler
                 }
             });
 
-            return result;
+            // Try to format as XML if it's valid XML
+            return FormatXmlIfValid(result);
+        }
+
+        private string FormatXmlIfValid(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return text;
+
+            try
+            {
+                // Try to parse as XML
+                var doc = XDocument.Parse(text);
+                
+                // If parsing succeeds, format with indentation
+                var settings = new XmlWriterSettings
+                {
+                    Indent = true,
+                    IndentChars = "  ", // 2 spaces for indentation
+                    NewLineChars = "\r\n",
+                    NewLineHandling = NewLineHandling.Replace,
+                    OmitXmlDeclaration = !text.TrimStart().StartsWith("<?xml", StringComparison.OrdinalIgnoreCase)
+                };
+
+                using (var stringWriter = new StringWriter())
+                {
+                    using (var xmlWriter = XmlWriter.Create(stringWriter, settings))
+                    {
+                        doc.Save(xmlWriter);
+                    }
+                    return stringWriter.ToString();
+                }
+            }
+            catch
+            {
+                // If XML parsing fails, return the original text
+                return text;
+            }
         }
 
         private void CopyButton_Click(object sender, RoutedEventArgs e)
